@@ -8,13 +8,17 @@ import uz.iskandarbek.dads.models.User
 import uz.iskandarbek.dads.utils.ItemTouchHelperAdapter
 import java.util.Collections
 
-class RvAdapters(var list: ArrayList<User>) : RecyclerView.Adapter<RvAdapters.Vh>(),
+class RvAdapters(var list: ArrayList<User>,var rvAction: RvAction) : RecyclerView.Adapter<RvAdapters.Vh>(),
     ItemTouchHelperAdapter {
 
     inner class Vh(var itemRv: ItemRvBinding) : RecyclerView.ViewHolder(itemRv.root) {
         fun onBind(user: User) {
             itemRv.name.text = user.name
-            itemRv.age.text = user.age.toString()
+            itemRv.authors.text = user.authors
+            itemRv.root.setOnClickListener {
+                rvAction.itemClick(user)
+            }
+
         }
     }
 
@@ -34,6 +38,7 @@ class RvAdapters(var list: ArrayList<User>) : RecyclerView.Adapter<RvAdapters.Vh
         holder.onBind(list[position])
     }
 
+
     override fun onItemMove(fromPosition: Int, toPosition: Int) {
         if (fromPosition > toPosition) {
             for (i in fromPosition until toPosition) {
@@ -50,5 +55,9 @@ class RvAdapters(var list: ArrayList<User>) : RecyclerView.Adapter<RvAdapters.Vh
     override fun onItemDismiss(position: Int) {
         list.removeAt(position)
         notifyItemRemoved(position)
+    }
+    interface RvAction{
+        fun itemClick(user: User)
+
     }
 }

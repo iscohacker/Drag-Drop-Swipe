@@ -1,3 +1,5 @@
 <resources>
     <string name="app_name">DaDS</string>
+    <string name="music_name">Music Name</string>
+    <string name="authorn_name">Authorn Name</string>
 </resources>
